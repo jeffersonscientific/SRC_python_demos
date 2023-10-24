@@ -172,7 +172,7 @@ def pool_wrapper(f, ncpus=1, f_agg=numpy.sum, *args, **kwargs):
 #  example. Benchmarking this will, somewhat disappointingly, suggest that the pickled process
 #  foregoes @jit compilation./
 #@numba.jit()
-def calc_pi(N, ncpus=1):
+def calc_pi(N, ncpus=1, f_pi = calc_pi_loop_loop):
     '''
     # add a Pool() wrapper to parallelize this code if ncpus>1. Otherwise, just run it.
     #  this is a good(ish?) way to write a function that can be parallelized but is still HPC safe.
@@ -183,7 +183,6 @@ def calc_pi(N, ncpus=1):
     '''
     #
     #f_pi = calc_pi_jit
-    f_pi = calc_pi_loop_loop
     # if ncpus>1, launch a Pool() and call self (pseudo-)recursively.
     if ncpus > 1:
         N_mpp = int(-(-N/ncpus))
@@ -210,6 +209,16 @@ def calc_pi(N, ncpus=1):
     return f_pi(N)
     #
 #
+@numba.njit(parallel=True)
+def calc_pi_njp(N):
+    M = 0
+    for i in numba.prange(int(N)):
+        x = random.uniform(-1, 1)
+        y = random.uniform(-1, 1)
+        if x**2 + y**2 < 1:
+            M += 1
+    return 4 * M / N
+#
 def calc_pi_n_write(f_pi=calc_pi_jit_np, Nits=int(1E7), fout_name=None):
     '''
     # comput pi and output to fout. We will use this as a simple demonstrator of emb. parallal.
@@ -219,6 +228,7 @@ def calc_pi_n_write(f_pi=calc_pi_jit_np, Nits=int(1E7), fout_name=None):
     if not fout_name is None:
         with open(fout_name, 'a') as fout:
             fout.write(f'pi:{pi}\n')
+    return pi
 #
 if __name__ == '__main__':
     '''
