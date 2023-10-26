@@ -24,10 +24,12 @@ def calc_pi_loop_loop(N):
 
 # Vectorize: Versatile, fast, -- what you will usually do.
 def calc_pi_vec(N):
+    # NOTE: might make some minor domain ( (0,1) vs (-1, 1) ) in commentary...
+    #
     #M = 0
     # spell it out, then consolidate...
-    #X = numpy.random.random(N)
-    #Y = numpy.random.random(N)
+    #X = 2.*numpy.random.random(N) - 1.
+    #Y = 2.*numpy.random.random(N) - 1.
     #Z = X**2 + Y**2
     #
     # All of that in one line...
@@ -39,7 +41,7 @@ def calc_pi_vec(N):
 #    # as a little trick, sum the index of (Z<1)
 #    M = numpy.sum((Z<1))
     
-    M = numpy.sum( (numpy.sum( numpy.random.random( (2, int(N)) )**2. , axis=0 ))<1 )
+    M = numpy.sum( (numpy.sum( (2.*numpy.random.random( (2, int(N)) ) -1.)**2. , axis=0 ))<1 )
     #
     return 4.0*M/N
 def calc_pi_vec_mpp(N, ncpus=1):
