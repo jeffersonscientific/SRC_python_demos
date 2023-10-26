@@ -140,7 +140,8 @@ def calc_pi_pool(ncpu=4, N_max=1E7, f_pi=calc_pi_loop_loop):
         #pi = numpy.mean(res)
       #
     return pi
-
+def f_sq(x):
+    return x*x
 #
 def pool_wrapper(f, ncpus=1, f_agg=numpy.sum, *args, **kwargs):
     '''
