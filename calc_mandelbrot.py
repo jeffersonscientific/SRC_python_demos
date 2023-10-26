@@ -21,8 +21,8 @@ def mandelbrotter(re_min=-2.0, im_min=-1.5, re_max=1.0, im_max=1.5, N_x=512, N_y
     print('** DEBUG: ', N_x, N_y)
     print('** DEBUG: ', d_re, d_im)
     #
-    Ks = numpy.zeros((N_x, N_y), int)
-    Zs = numpy.zeros((N_x, N_y), float)
+    Ks = numpy.zeros((N_y, N_x), int)
+    Zs = numpy.zeros((N_y, N_x), float)
     #Ks = [[0 for k in range(N_x)] for j in range(N_y)]
     #Zs = [[0. for k in range(N_x)] for j in range(N_y)]
     #
