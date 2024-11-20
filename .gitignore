@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# yoder:
+data_sets/
+dicom_data/
+md_exports/
+
 # C extensions
 *.so
 
